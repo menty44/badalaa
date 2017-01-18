@@ -1,0 +1,301 @@
+-- Database: badaladb
+
+-- DROP DATABASE badaladb;
+
+CREATE DATABASE badaladb
+  WITH OWNER = badala
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'en_US.UTF-8'
+       LC_CTYPE = 'en_US.UTF-8'
+       CONNECTION LIMIT = -1;
+
+COMMENT ON DATABASE badaladb
+  IS 'This is the database for the application Badala techsurance';
+
+-- Table: audit_logs
+
+-- DROP TABLE audit_logs;
+
+CREATE TABLE audit_logs
+(
+  id serial NOT NULL,
+  username character varying(50) NOT NULL,
+  groupname character varying(50) NOT NULL,
+  userid character varying(250) NOT NULL,
+  status character varying(50) NOT NULL,
+  activity character varying(500),
+  created_at character varying(50),
+  updated_at character varying(50),
+  CONSTRAINT audit_logs_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE audit_logs
+  OWNER TO badala;
+
+-- Table: claims
+
+-- DROP TABLE claims;
+
+CREATE TABLE claims
+(
+  id serial NOT NULL,
+  name character varying(70),
+  code character varying(50),
+  description character varying(100),
+  created_at character varying(50),
+  updated_at character varying(50),
+  CONSTRAINT claims_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE claims
+  OWNER TO badala;
+
+-- Table: groups
+
+-- DROP TABLE groups;
+
+CREATE TABLE groups
+(
+  id serial NOT NULL,
+  groupname character varying(50) NOT NULL,
+  description character varying(250) NOT NULL,
+  created_at character varying(50) NOT NULL,
+  updated_at character varying(50),
+  status character varying(50),
+  created_by character varying(50),
+  activatedby character varying(50),
+  deactivatedby character varying(50),
+  CONSTRAINT groups_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE groups
+  OWNER TO badala;
+
+-- Table: insurance_companies
+
+-- DROP TABLE insurance_companies;
+
+CREATE TABLE insurance_companies
+(
+  id serial NOT NULL,
+  insname character varying(70),
+  code character varying(50),
+  location character varying(100),
+  phone1 character varying(50),
+  phone2 character varying(50),
+  phone3 character varying(50),
+  website character varying(50),
+  pobox character varying(50),
+  created_at character varying(50),
+  updated_at character varying(50),
+  CONSTRAINT insurance_companies_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE insurance_companies
+  OWNER TO badala;
+
+-- Table: responsecode
+
+-- DROP TABLE responsecode;
+
+CREATE TABLE responsecode
+(
+  id serial NOT NULL,
+  code character varying(3),
+  description character varying(100),
+  created timestamp without time zone DEFAULT now(),
+  modified timestamp without time zone DEFAULT now(),
+  CONSTRAINT responsecode_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE responsecode
+  OWNER TO badala;
+
+-- Table: settings
+
+-- DROP TABLE settings;
+
+CREATE TABLE settings
+(
+  id serial NOT NULL,
+  name character varying(50) NOT NULL,
+  configname character varying(50) NOT NULL,
+  configvalue character varying(50),
+  description text,
+  created_at character varying(50) NOT NULL,
+  created_by character varying(50) NOT NULL,
+  modified_by character varying(50) NOT NULL,
+  status integer NOT NULL,
+  CONSTRAINT settings_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE settings
+  OWNER TO badala;
+
+-- Table: users
+
+-- DROP TABLE users;
+
+CREATE TABLE users
+(
+  id serial NOT NULL,
+  username character varying(50) NOT NULL,
+  fname character varying(50) NOT NULL,
+  mname character varying(50) NOT NULL,
+  lname character varying(50) NOT NULL,
+  email character varying(50) NOT NULL,
+  phone character varying(50) NOT NULL,
+  password character varying(50) NOT NULL,
+  admin character varying(50) NOT NULL,
+  status integer NOT NULL,
+  groupid integer NOT NULL,
+  avator character varying(50),
+  created_at character varying(50) NOT NULL,
+  modified_by character varying(50),
+  age character varying(50) NOT NULL,
+  gender character varying(50) NOT NULL,
+  CONSTRAINT users_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE users
+  OWNER TO badala;
+  
+  -- Table: status
+
+-- DROP TABLE status;
+
+CREATE TABLE status
+(
+  id serial NOT NULL,
+  name character(50),
+  description text,
+  code integer,
+  CONSTRAINT status_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE status
+  OWNER TO badala;
+
+  
+
+-- Sequence: audit_logs_id_seq
+
+-- DROP SEQUENCE audit_logs_id_seq;
+
+CREATE SEQUENCE audit_logs_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE audit_logs_id_seq
+  OWNER TO badala;
+
+-- Sequence: claims_id_seq
+
+-- DROP SEQUENCE claims_id_seq;
+
+CREATE SEQUENCE claims_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE claims_id_seq
+  OWNER TO badala;
+
+-- Sequence: groups_id_seq
+
+-- DROP SEQUENCE groups_id_seq;
+
+CREATE SEQUENCE groups_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE groups_id_seq
+  OWNER TO badala;
+
+-- Sequence: insurance_companies_id_seq
+
+-- DROP SEQUENCE insurance_companies_id_seq;
+
+CREATE SEQUENCE insurance_companies_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE insurance_companies_id_seq
+  OWNER TO badala;
+
+-- Sequence: responsecode_id_seq
+
+-- DROP SEQUENCE responsecode_id_seq;
+
+CREATE SEQUENCE responsecode_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE responsecode_id_seq
+  OWNER TO badala;
+
+-- Sequence: settings_id_seq
+
+-- DROP SEQUENCE settings_id_seq;
+
+CREATE SEQUENCE settings_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE settings_id_seq
+  OWNER TO badala;
+
+-- Sequence: users_id_seq
+
+-- DROP SEQUENCE users_id_seq;
+
+CREATE SEQUENCE users_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE users_id_seq
+  OWNER TO badala;
+  
+  -- Sequence: status_id_seq
+
+-- DROP SEQUENCE status_id_seq;
+
+CREATE SEQUENCE status_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE status_id_seq
+  OWNER TO badala;
+
